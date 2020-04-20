@@ -1,1 +1,63 @@
-<p>employee-create works!</p>
+<p-panel header="EMPLOYEE CREATION">
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        First Name :
+      </div>
+      <div class="ui-grid-col-6">
+        <input type="text" pInputText placeholder="First Name" [(ngModel)]="employeeCreationBody.firstName"/>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+       Last Name :
+      </div>
+      <div class="ui-grid-col-6">
+        <input type="text" pInputText placeholder="Last Name" [(ngModel)]="employeeCreationBody.lastName"/>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        Title :
+      </div>
+      <div class="ui-grid-col-6">
+        <input type="text" pInputText placeholder="Title" [(ngModel)]="employeeCreationBody.title"/>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        Department :
+      </div>
+      <div class="ui-grid-col-6">
+        <input type="text" pInputText placeholder="Department" [(ngModel)]="employeeCreationBody.department"/>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        E-Mail :
+      </div>
+      <div class="ui-grid-col-6">
+        <input type="text" pInputText placeholder="E-Mail" [(ngModel)]="employeeCreationBody.eMail"/>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        Phone Number :
+      </div>
+      <div class="ui-grid-col-6">
+        <input type="text" pInputText placeholder="Phone Number" [(ngModel)]="employeeCreationBody.phoneNumber"/>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"></div>
+      <div class="ui-grid-col-6">
+      </div>
+      <div>
+        <button pButton type="button" label="Cancel" class="ui-button-warning" routerLink="/search-expenses"></button>
+      </div>
+      <div>
+        <button pButton type="button" label="Save" class="ui-button-success" (click)="saveEmployee()"></button>
+      </div>
+    </div>
+  </div>
+</p-panel>

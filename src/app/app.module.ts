@@ -32,7 +32,8 @@ import { UserDetailComponent } from './modules/user/user-detail/user-detail.comp
 import { UserSearchComponent } from './modules/user/user-search/user-search.component';
 import {ApiService} from './services/api.service';
 import {EmployeeService} from './modules/employee/services/employee.service';
-import {ButtonModule, PanelMenuModule, TableModule, TabMenuModule} from 'primeng';
+import {ButtonModule, CalendarModule, DropdownModule, PanelMenuModule, PanelModule, TableModule, TabMenuModule} from 'primeng';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -58,22 +59,26 @@ import {ButtonModule, PanelMenuModule, TableModule, TabMenuModule} from 'primeng
     UserDetailComponent,
     UserSearchComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatListModule,
-        MatButtonModule,
-        MatIconModule,
-        TableModule,
-        ButtonModule,
-        PanelMenuModule,
-        TabMenuModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatIconModule,
+    TableModule,
+    ButtonModule,
+    PanelMenuModule,
+    TabMenuModule,
+    PanelModule,
+    FormsModule,
+    CalendarModule,
+    DropdownModule
+  ],
   providers: [ApiService],
   bootstrap: [AppComponent]
 })

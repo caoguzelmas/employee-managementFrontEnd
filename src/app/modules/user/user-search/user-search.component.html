@@ -1,1 +1,53 @@
-<p>user-search works!</p>
+<p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="users" [paginator]="true" [rows]="10" dataKey="Name-Surname" selectionMode="single" [(selection)]="selectedUser">
+  <ng-template pTemplate="caption">
+    LIST OF EMPLOYEES
+
+    <div class="ui-table-globalfilter-container">
+      <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target, 'contains')" style="width:250px;">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+        <input *ngSwitchCase="'Name-Surname'" pInputText type="text" placeholder="Starts with" class="ui-column-filter" style="width: 100%;" (input)="dt.filter($event.target, col.field, 'startsWith')">
+        <input *ngSwitchCase="'Title'" pInputText type="text" placeholder="Contains" class="ui-column-filter" style="width: 100%;" (input)="dt.filter($event.target, col.field, 'contains')">
+        <!--        <p-dropdown *ngSwitchCase="'brand'" [options]="brands" styleClass="ui-column-filter" [showClear]="true" [style]="{'width':'100%'}" placeholder="Select a Brand" (onChange)="dt.filter($event.value, col.field, 'equals')">-->
+        <!--          <ng-template let-item pTemplate="selectedItem">-->
+        <!--            <img src="assets/showcase/images/demo/car/{{item.label}}.png" style="width:16px;vertical-align:middle" />-->
+        <!--            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>-->
+        <!--          </ng-template>-->
+        <!--          <ng-template let-car pTemplate="item">-->
+        <!--            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">-->
+        <!--              <img src="assets/showcase/images/demo/car/{{car.label}}.png" style="width:24px;position:absolute;top:1px;left:5px"/>-->
+        <!--              <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>-->
+        <!--            </div>-->
+        <!--          </ng-template>-->
+        <!--        </p-dropdown>-->
+        <!--        <p-multiSelect *ngSwitchCase="'color'" [options]="colors" [filter]="false"  styleClass="ui-column-filter" [style]="{'width':'100%'}"  defaultLabel="Select a color" (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>-->
+      </th>
+      <th style="width: 8em; text-align: center;">
+        <button pButton type="button" icon="pi pi-cog"></button>
+        <!--        MAYBE......-->
+      </th>
+    </tr>
+
+
+  </ng-template>
+  <ng-template let-user pTemplate="body">
+    <tr [pSelectableRow]="selectedUser" [pEditableRow]="selectedUser">
+      <td>{{user.userId}}</td>
+      <td>{{user.userName}}</td>
+      <td>{{user.userRole}}</td>
+      <td>
+        <!--        <img src="assets/showcase/images/demo/car/{{rowData.brand}}.png" style="width: 50px; margin-right: 1em; vertical-align: middle;">-->
+        {{user.employee}}
+      </td>
+      <td>{{user.createdAt}}</td>
+      <td>
+        <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" routerLink="/employee-detail"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

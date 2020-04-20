@@ -2,34 +2,38 @@ import { Injectable } from '@angular/core';
 import {ApiService} from '../../../services/api.service';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {environment} from '../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Expense} from '../../../model/Expense';
+import {User} from '../../../model/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private USER_PATH = '/users';
+  private baseUrl = environment.API_BASE_PATH;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getAllUsers(): Observable<any> {
-    return this.apiService.get(this.USER_PATH).pipe(map(
-      response => response !== null ? response : null));
+  getAllUsersWithPagination(page: number, size: number){
+    return this.httpClient.get(this.baseUrl + '/users/getUsersByPagination?page' + page + '&size' + size);
   }
 
-  getUserById(id): Observable<any> {
-    return this.apiService.get(this.USER_PATH, id).pipe(map(
-      response => response !== null ? response : null));
+  getUserById(userId: number) {
+    return this.httpClient.get(this.baseUrl + '/users/' + userId);
   }
 
-  createUser(Employee): Observable<any> {
-    return this.apiService.post(this.USER_PATH, Employee).pipe(map(
-      response => response !== null ? response : null));
+  createUser(userToBeCreate: User){
+    return this.httpClient.post(this.baseUrl + '/users', userToBeCreate);
   }
 
-  deleteUser(id): Observable<any> {
-    return this.apiService.delete(this.USER_PATH, id).pipe(map(
-      response => response !== null ? response : null));
+  deleteUser(userId: number) {
+    return this.httpClient.delete(this.baseUrl + '/users/' + userId);
+  }
+
+  updateUser(userBody: User, userId: number) {
+    return this.httpClient.put(this.baseUrl + '/users/' + userId, userBody);
   }
 }
 

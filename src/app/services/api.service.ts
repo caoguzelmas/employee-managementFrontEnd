@@ -9,14 +9,20 @@ import {environment} from '../../environments/environment';
 })
 export class ApiService {
 
+  private baseUrl = environment.API_BASE_PATH;
+
   constructor(private httpClient: HttpClient) { }
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.httpClient.get(environment.API_BASE_PATH + path, {params}).pipe(catchError(this.formatError));
   }
 
   post(path: string, params: HttpParams = new HttpParams()): Observable<any> {
-    const header = new HttpHeaders({'Content- Type': 'application-json'});
     return this.httpClient.get(environment.API_BASE_PATH + path, {params}).pipe(catchError(this.formatError));
   }
 
@@ -31,5 +37,13 @@ export class ApiService {
 
   private formatError(error: any) {
     return Observable.caller(environment.API_BASE_PATH + error.error);
+  }
+
+  getAllLeaveTypes() {
+    return this.httpClient.get(this.baseUrl + '/common/getAllLeaveTypes');
+  }
+
+  getAllExpenseTypes() {
+    return this.httpClient.get(this.baseUrl + '/common/getAllExpenseTypes');
   }
 }

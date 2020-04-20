@@ -36,7 +36,7 @@
 
   </ng-template>
   <ng-template let-employee pTemplate="body">
-    <tr [pSelectableRow]="employees" [pEditableRow]="employees">
+    <tr [pSelectableRow]="selectedEmployee" [pEditableRow]="selectedEmployee">
       <td>{{employee.firstName}}</td>
       <td>{{employee.lastName}}</td>
       <td>{{employee.title}}</td>

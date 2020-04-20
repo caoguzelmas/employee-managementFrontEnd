@@ -2,33 +2,36 @@ import { Injectable } from '@angular/core';
 import {ApiService} from '../../../services/api.service';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {environment} from '../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Leave} from '../../../model/Leave';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeaveService {
 
-  private LEAVE_PATH = '/leaves';
+  private baseUrl = environment.API_BASE_PATH;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
-  getAllLeaves(): Observable<any> {
-    return this.apiService.get(this.LEAVE_PATH).pipe(map(
-      response => response !== null ? response : null));
+  getAllLeavesWithPagination(page: number, size: number) {
+    return this.httpClient.get(this.baseUrl + '/leaves/getLeavesByPagination?page' + page + '&size' + size);
   }
 
-  getLeaveById(id): Observable<any> {
-    return this.apiService.get(this.LEAVE_PATH, id).pipe(map(
-      response => response !== null ? response : null));
+  getLeaveById(leaveId: number) {
+    return this.httpClient.get(this.baseUrl + '/leaves/' + leaveId);
   }
 
-  createLeave(Employee): Observable<any> {
-    return this.apiService.post(this.LEAVE_PATH, Employee).pipe(map(
-      response => response !== null ? response : null));
+  createLeave(leaveToBeCreate: Leave) {
+    return this.httpClient.post(this.baseUrl + '/leaves/', leaveToBeCreate);
   }
 
-  deleteLeave(id): Observable<any> {
-    return this.apiService.delete(this.LEAVE_PATH, id).pipe(map(
-      response => response !== null ? response : null));
+  deleteLeave(leaveId: number) {
+    return this.httpClient.delete(this.baseUrl + '/leaves/' + leaveId);
+  }
+
+  updateLeave(leaveBody: Leave, leaveId: number) {
+    return this.httpClient.put(this.baseUrl + '/leaves/' + leaveId, leaveBody);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Expense} from '../../../model/Expense';
 import {Employee} from '../../../model/Employee';
+import {ExpenseService} from '../services/expense.service';
 
 @Component({
   selector: 'app-expense-search',
@@ -14,7 +15,7 @@ export class ExpenseSearchComponent implements OnInit {
   filterBodyExpense: Expense;
   expenseTabItems: any[];
 
-  constructor() { }
+  constructor(private expenseService: ExpenseService) { }
 
   ngOnInit(): void {
     this.filterBodyExpense = new Expense();
@@ -34,7 +35,12 @@ export class ExpenseSearchComponent implements OnInit {
   }
 
   paginate($event: any) {
-
+    const page = $event.page;
+    const size = $event.size;
+    this.expenseService.getAllExpensesWithPagination(page, size).subscribe((response: any) => {
+      this.expenses = response.content;
+      console.log(response.content);
+    });
   }
 
 }

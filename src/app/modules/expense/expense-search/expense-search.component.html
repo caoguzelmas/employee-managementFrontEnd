@@ -32,17 +32,17 @@
 
 
   </ng-template>
-  <ng-template let-employee pTemplate="body">
+  <ng-template let-expense pTemplate="body">
     <tr [pSelectableRow]="expenses" [pEditableRow]="expenses">
-      <td>{{employee.firstName}}</td>
-      <td>{{employee.lastName}}</td>
-      <td>{{employee.title}}</td>
+      <td>{{expense.expenseId}}</td>
+      <td>{{expense.employee}}</td>
+      <td>{{expense.expenseMonth}}</td>
       <td>
         <!--        <img src="assets/showcase/images/demo/car/{{rowData.brand}}.png" style="width: 50px; margin-right: 1em; vertical-align: middle;">-->
-        {{employee.department}}
+        {{expense.expenseYear}}
       </td>
-      <td>{{employee.eMail}}</td>
-      <td>{{employee.phoneNumber}}</td>
+      <td>{{expense.createdAt}}</td>
+      <td>{{expense.totalAmount}}</td>
       <td>
         <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" routerLink="/employee-detail"></button>
       </td>

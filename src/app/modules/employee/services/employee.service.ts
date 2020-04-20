@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {Employee} from '../../../model/Employee';
 import {ApiService} from '../../../services/api.service';
@@ -14,6 +14,12 @@ export class EmployeeService {
   private baseUrl = environment.API_BASE_PATH;
 
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
 
 
   getAllEmployees(page: number, size: number) {
@@ -30,8 +36,8 @@ export class EmployeeService {
     return this.httpClient.get(this.baseUrl + '/employees/' + id);
   }
 
-  createEmployee(employeeToBeCreate: Employee) {
-    return this.httpClient.post(this.baseUrl + '/employees', employeeToBeCreate);
+  createEmployee(employeeToBeCreate: Employee): Observable<any> {
+    return this.httpClient.post<any>(this.baseUrl + '/employees', employeeToBeCreate);
   }
 
   deleteEmployee(id: number) {
