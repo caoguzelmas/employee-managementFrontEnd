@@ -12,10 +12,14 @@ export class EmployeeSearchComponent implements OnInit {
   cols: any[];
   selectedEmployee: Employee;
   filterBodyEmployee: Employee;
+  updateConfirmationDialog = false;
+  employeeUpdateBody: Employee;
+  updateDialogID: any;
 
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
+    this.employeeUpdateBody = new Employee();
     this.filterBodyEmployee =  new Employee();
     this.cols = [
       { field: this.filterBodyEmployee.firstName, header: 'Name' },
@@ -42,5 +46,23 @@ export class EmployeeSearchComponent implements OnInit {
     this.employeeService.getAllEmployeesWithPagination(page, size).subscribe((response: any) => {
       this.employees = response.content;
     });
+  }
+
+  updateEmployee(employee: any) {
+    this.updateDialogID = employee.id;
+  }
+
+  updateDialog() {
+    this.updateConfirmationDialog === false ? this.updateConfirmationDialog = true : this.updateConfirmationDialog = false;
+  }
+
+  cancelUpdate() {
+    this.updateDialogID = '';
+    this.updateConfirmationDialog = false;
+  }
+
+  confirmUpdate(employeeUpdateBody: Employee) {
+    this.employeeService.updateEmployee(employeeUpdateBody, employeeUpdateBody.id).subscribe();
+    this.updateConfirmationDialog = false;
   }
 }

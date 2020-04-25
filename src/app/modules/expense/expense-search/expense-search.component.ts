@@ -14,6 +14,8 @@ export class ExpenseSearchComponent implements OnInit {
   selectedExpense: Expense;
   filterBodyExpense: Expense;
   expenseTabItems: any[];
+  updateDialogID: any;
+  updateConfirmationDialog = false;
 
   constructor(private expenseService: ExpenseService) { }
 
@@ -43,4 +45,19 @@ export class ExpenseSearchComponent implements OnInit {
     });
   }
 
+  updateExpense(expense: Expense) {
+    this.updateDialogID = expense.expenseId;
+  }
+
+  updateDialog() {
+
+  }
+
+  cancelUpdate() {
+
+  }
+
+  confirmUpdate(expense: Expense) {
+
+  }
 }

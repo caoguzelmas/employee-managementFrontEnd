@@ -2,8 +2,6 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import {UserType} from '../app/model/UserType';
-import {Employee} from '../app/model/Employee';
 
 export const environment = {
   production: false,
@@ -12,6 +10,7 @@ export const environment = {
     userId: 2,
     userName: 'caoguzelmas',
     password: '',
+    eMail: 'caoguzelmas@gmail.com',
     userRole: null,
     createdAt: '2020/04/20 12:35:22',
     updatedAt: null,

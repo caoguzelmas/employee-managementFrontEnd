@@ -43,10 +43,35 @@
       </td>
       <td>{{expense.createdAt}}</td>
       <td>{{expense.totalAmount}}</td>
-      <td>
-        <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" routerLink="/employee-detail"></button>
+      <td style="width: 8em; text-align: center;">
+        <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" (click)="updateExpense(expense)"></button>
       </td>
     </tr>
+    <p-dialog  [(visible)]="expense.id === updateDialogID" closeIcon="false" class="test">
+      <p-header>
+        <span *ngIf="!updateConfirmationDialog">Detail of Employee</span>
+        <span *ngIf="updateConfirmationDialog">Update Employee</span>
+        <button type="button" class="dialog-update-button" pButton icon="pi pi-pencil" (click)="updateDialog()"></button>
+      </p-header>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          First Name :
+        </div>
+        <div class="ui-grid-col-6" style="padding-left: 10px">
+          <span *ngIf="!updateConfirmationDialog" class="size-10 weight-500">{{expense.totalAmount}}</span>
+          <input *ngIf="updateConfirmationDialog" type="text" pInputText
+                 [(ngModel)]="expense.totalAmount"/>
+        </div>
+      </div>
+
+
+      <p-footer>
+        <button pButton type="button" label="Cancel" class="ui-button-warning" (click)="cancelUpdate()"></button>
+        <button pButton type="button" label="Save" class="ui-button-success" (click)="confirmUpdate(expense)"></button>
+      </p-footer>
+
+
+    </p-dialog>
   </ng-template>
 </p-table>
 

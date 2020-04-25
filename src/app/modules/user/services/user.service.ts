@@ -24,7 +24,7 @@ export class UserService {
     return this.httpClient.get(this.baseUrl + '/users/' + userId);
   }
 
-  createUser(userToBeCreate: User){
+  createUser(userToBeCreate: User) {
     return this.httpClient.post(this.baseUrl + '/users', userToBeCreate);
   }
 

@@ -45,9 +45,63 @@
         {{user.employee}}
       </td>
       <td>{{user.createdAt}}</td>
-      <td>
-        <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" routerLink="/employee-detail"></button>
+      <td style="width: 8em; text-align: center;">
+        <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" (click)="updateUser(user)"></button>
       </td>
     </tr>
+    <p-dialog [(visible)]="user.userId === updateDialogID" closeIcon="false">
+      <p-header>
+        <span *ngIf="!updateConfirmationDialog">Detail of Leave</span>
+        <span *ngIf="updateConfirmationDialog">Update Leave</span>
+        <button type="button" class="dialog-update-button" pButton icon="pi pi-pencil" (click)="updateDialog()"></button>
+      </p-header>
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid"  [style]="{'height': '250px'}">
+        <div class="ui-grid-row" style="padding-top: 20px">
+          <div class="ui-grid-col-2">
+            E-Mail :
+          </div>
+          <div class="ui-grid-col-6">
+            <input type="text" [disabled]="!updateConfirmationDialog" pInputText placeholder="E-Mail" [(ngModel)]="user.eMail"/>
+          </div>
+        </div>
+        <div class="ui-grid-row" style="padding-top: 10px">
+          <div class="ui-grid-col-2">
+            Username :
+          </div>
+          <div class="ui-grid-col-6">
+            <input type="text" [disabled]="!updateConfirmationDialog" pInputText placeholder="Username" [(ngModel)]="user.userName"/>
+          </div>
+        </div>
+        <div class="ui-grid-row" style="padding-top: 10px">
+          <div class="ui-grid-col-2">
+            Password :
+          </div>
+          <div class="ui-grid-col-6">
+            <div class="ui-inputgroup">
+              <input [disabled]="!updateConfirmationDialog" [showPassword]="isPasswordShowing" type="password" placeholder="Password" pPassword [(ngModel)]="user.password"/>
+              <button [disabled]="!updateConfirmationDialog" pButton type="button" icon="pi pi-eye" class="ui-button-warn" (click)="ShowPassword()"></button>
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-row" style="padding-top: 10px">
+          <div class="ui-grid-col-2">
+            User Role :
+          </div>
+          <div class="ui-grid-col-4">
+            <p-dropdown [options]="userRoleTypes" [disabled]="!updateConfirmationDialog" optionLabel="name"
+                        [(ngModel)]="userRoleSelect" (onChange)="setUserRole(user)"></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2"></div>
+          <div class="ui-grid-col-6">
+          </div>
+        </div>
+      </div>
+      <p-footer>
+        <button pButton type="button" label="Cancel" class="ui-button-warning" (click)="cancelUpdate()"></button>
+        <button pButton type="button" [disabled]="!updateConfirmationDialog" label="Save" class="ui-button-success" (click)="confirmUpdate(user)"></button>
+      </p-footer>
+    </p-dialog>
   </ng-template>
 </p-table>

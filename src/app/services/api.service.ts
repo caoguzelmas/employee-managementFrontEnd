@@ -46,4 +46,8 @@ export class ApiService {
   getAllExpenseTypes() {
     return this.httpClient.get(this.baseUrl + '/common/getAllExpenseTypes');
   }
+
+  getAllUserRoleTypes() {
+    return this.httpClient.get(this.baseUrl + '/common/getAllUserRoleTypes');
+  }
 }

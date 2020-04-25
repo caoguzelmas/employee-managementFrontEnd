@@ -1,12 +1,12 @@
 import {Employee} from './Employee';
-import {UserType} from './UserType';
 
 export class User {
 
   userId: number;
   userName: string;
   password: string;
-  userRole: UserType;
+  eMail: string;
+  userRole: string;
   createdAt: string;
   updatedAt: string;
   employee: Employee;

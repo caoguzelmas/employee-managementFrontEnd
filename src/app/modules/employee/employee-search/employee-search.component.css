@@ -35,3 +35,12 @@
   border: 0 none;
   padding: 1em;
 }
+
+.dialog-update-button {
+  margin-left: 500px;
+}
+
+.dialog-label {
+  border: groove;
+  width: 100px;
+}

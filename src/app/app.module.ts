@@ -16,9 +16,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { ExpenseSearchComponent } from './modules/expense/expense-search/expense-search.component';
-import { ExpenseDetailComponent } from './modules/expense/expense-detail/expense-detail.component';
 import { EmployeeSearchComponent } from './modules/employee/employee-search/employee-search.component';
-import { EmployeeDetailComponent } from './modules/employee/employee-detail/employee-detail.component';
 import { LeaveSearchComponent } from './modules/leave/leave-search/leave-search.component';
 import { LeaveDetailComponent } from './modules/leave/leave-detail/leave-detail.component';
 import { LeaveCreateComponent } from './modules/leave/leave-create/leave-create.component';
@@ -32,7 +30,16 @@ import { UserDetailComponent } from './modules/user/user-detail/user-detail.comp
 import { UserSearchComponent } from './modules/user/user-search/user-search.component';
 import {ApiService} from './services/api.service';
 import {EmployeeService} from './modules/employee/services/employee.service';
-import {ButtonModule, CalendarModule, DropdownModule, PanelMenuModule, PanelModule, TableModule, TabMenuModule} from 'primeng';
+import {
+    ButtonModule,
+    CalendarModule, DialogModule,
+    DropdownModule,
+    MessageModule,
+    PanelMenuModule,
+    PanelModule, PasswordModule,
+    TableModule,
+    TabMenuModule
+} from 'primeng';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
@@ -44,9 +51,7 @@ import {FormsModule} from '@angular/forms';
     DashboardComponent,
     LoginComponent,
     ExpenseSearchComponent,
-    ExpenseDetailComponent,
     EmployeeSearchComponent,
-    EmployeeDetailComponent,
     LeaveSearchComponent,
     LeaveDetailComponent,
     LeaveCreateComponent,
@@ -59,26 +64,29 @@ import {FormsModule} from '@angular/forms';
     UserDetailComponent,
     UserSearchComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule,
-    MatIconModule,
-    TableModule,
-    ButtonModule,
-    PanelMenuModule,
-    TabMenuModule,
-    PanelModule,
-    FormsModule,
-    CalendarModule,
-    DropdownModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatButtonModule,
+        MatIconModule,
+        TableModule,
+        ButtonModule,
+        PanelMenuModule,
+        TabMenuModule,
+        PanelModule,
+        FormsModule,
+        CalendarModule,
+        DropdownModule,
+        MessageModule,
+        DialogModule,
+        PasswordModule
+    ],
   providers: [ApiService],
   bootstrap: [AppComponent]
 })
