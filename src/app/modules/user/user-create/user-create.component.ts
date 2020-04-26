@@ -21,7 +21,6 @@ export class UserCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.userCreationBody = new User();
-    this.currentUser = environment.currentUser;
     this.apiService.getAllUserRoleTypes().subscribe((response: any) => {
       this.userRoleTypes = response;
     });

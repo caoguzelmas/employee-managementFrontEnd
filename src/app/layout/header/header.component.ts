@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Employee} from '../../model/Employee';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -6,14 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  sidenav: any;
-  isEmployeesClicked = false;
   items: any[];
+  sampleEmployee: Employee;
+  splitButtonItems: any[];
 
   constructor() { }
 
 
   ngOnInit(): void {
+    this.sampleEmployee = environment.currentUser.employee;
     this.items = [
       {label: 'Dashboard',
        routerLink: '/dashboard'},
@@ -43,10 +46,12 @@ export class HeaderComponent implements OnInit {
           {label: 'Create User', icon: 'pi pi-fw pi-filter', routerLink: '/user/create'}
         ]}
     ];
-  }
-
-
-  employeesClicked() {
-    this.isEmployeesClicked = true;
+    this.splitButtonItems = [
+      {label: 'Profile Detail', icon: 'pi pi-info' , routerLink: ['/employee-detail']},
+      {label: 'Sign Out', icon: 'pi pi-cog'},
+      {separator: true},
+      {label: 'Update', icon: 'pi pi-refresh'},
+      {label: 'Delete', icon: 'pi pi-times'},
+    ];
   }
 }

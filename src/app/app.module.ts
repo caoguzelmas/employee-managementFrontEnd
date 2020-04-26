@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -31,16 +31,27 @@ import { UserSearchComponent } from './modules/user/user-search/user-search.comp
 import {ApiService} from './services/api.service';
 import {EmployeeService} from './modules/employee/services/employee.service';
 import {
-    ButtonModule,
-    CalendarModule, DialogModule,
-    DropdownModule,
-    MessageModule,
-    PanelMenuModule,
-    PanelModule, PasswordModule,
-    TableModule,
-    TabMenuModule
+  ButtonModule,
+  CalendarModule, DialogModule,
+  DropdownModule,
+  MessageModule,
+  PanelMenuModule,
+  PanelModule, PasswordModule, SplitButtonModule,
+  TableModule,
+  TabMenuModule
 } from 'primeng';
 import {FormsModule} from '@angular/forms';
+import {JwtInterceptor} from './security/jwt.interceptor';
+import {AuthenticationService} from './security/authentication.service';
+import {AuthGuard} from './security/auth.guard';
+import {ErrorInterceptor} from './security/authentication.interceptor';
+import {CommonModule} from '@angular/common';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatTableModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -64,30 +75,47 @@ import {FormsModule} from '@angular/forms';
     UserDetailComponent,
     UserSearchComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatListModule,
-        MatButtonModule,
-        MatIconModule,
-        TableModule,
-        ButtonModule,
-        PanelMenuModule,
-        TabMenuModule,
-        PanelModule,
-        FormsModule,
-        CalendarModule,
-        DropdownModule,
-        MessageModule,
-        DialogModule,
-        PasswordModule
-    ],
-  providers: [ApiService],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatIconModule,
+    TableModule,
+    ButtonModule,
+    PanelMenuModule,
+    TabMenuModule,
+    PanelModule,
+    FormsModule,
+    CalendarModule,
+    DropdownModule,
+    MessageModule,
+    DialogModule,
+    PasswordModule,
+    CommonModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatDialogModule,
+    MatTableModule,
+    MatMenuModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    SplitButtonModule
+  ],
+  providers: [
+    ApiService,
+    AuthenticationService,
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

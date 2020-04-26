@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AppLayoutComponent} from './layout/app-layout/app-layout.component';
+import {LoginComponent} from './login/login.component';
+import {AuthGuard} from './security/auth.guard';
 
 
 const routes: Routes = [
-  { path: '', component: AppLayoutComponent,
+  { path: '', component: AppLayoutComponent, canActivate: [AuthGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard',  loadChildren: () => import('./dashboard/dashboard.module').then(module => module.DashboardModule) },
@@ -14,7 +16,8 @@ const routes: Routes = [
       { path: 'time-sheet', loadChildren: () => import('./modules/time-sheet/time-sheet.module').then(module => module.TimeSheetModule) },
       { path: 'user', loadChildren: () => import('./modules/user/user.module').then(module => module.UserModule) }
     ]
-  }
+  },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

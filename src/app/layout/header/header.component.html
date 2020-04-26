@@ -5,19 +5,13 @@
     </button>
     <h1>Employee Management System</h1>
     <span class="menu-spacer"></span>
+    <div>
+      <p-splitButton label="{{sampleEmployee.firstName + ' ' + sampleEmployee.lastName}}" [model]="splitButtonItems"></p-splitButton>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav class="sidenav-class">
-<!--    <mat-nav-list>
-      <a mat-list-item (click)="sidenav.toggle()" [routerLink]="'/dashboard'"> Dashboard </a>
-      <a mat-list-item (click)="employeesClicked()"> Employees </a>
-         <a mat-list-item *ngIf="isEmployeesClicked" (click)="sidenav.toggle()" [routerLink]="'/employee/search'"> - Search Employees </a>
-      <a mat-list-item (click)="sidenav.toggle()" [routerLink]="'/expense/search'"> Expenses </a>
-      <a mat-list-item (click)="sidenav.toggle()" [routerLink]="'/leave/search'"> Leaves </a>
-      <a mat-list-item (click)="sidenav.toggle()" [routerLink]="'/time-sheet/search'"> Time Sheets </a>
-      <a mat-list-item (click)="sidenav.toggle()" [routerLink]="'/user/search'"> User (ONLY ADMIN) </a>
-    </mat-nav-list>-->
     <p-panelMenu [model]="items" [style]="{'width':'300px'}"></p-panelMenu>
   </mat-sidenav>
   <mat-sidenav-content>
