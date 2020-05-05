@@ -29,11 +29,11 @@ import { UserCreateComponent } from './modules/user/user-create/user-create.comp
 import { UserDetailComponent } from './modules/user/user-detail/user-detail.component';
 import { UserSearchComponent } from './modules/user/user-search/user-search.component';
 import {ApiService} from './services/api.service';
-import {EmployeeService} from './modules/employee/services/employee.service';
+
 import {
   ButtonModule,
-  CalendarModule, DialogModule,
-  DropdownModule,
+  CalendarModule, ChartModule, DialogModule,
+  DropdownModule, FullCalendarModule, InputTextModule,
   MessageModule,
   PanelMenuModule,
   PanelModule, PasswordModule, SplitButtonModule,
@@ -52,6 +52,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
+import {ExpenseDetailComponent} from './modules/expense/expense-detail/expense-detail.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     DashboardComponent,
     LoginComponent,
     ExpenseSearchComponent,
+    ExpenseDetailComponent,
     EmployeeSearchComponent,
     LeaveSearchComponent,
     LeaveDetailComponent,
@@ -107,7 +109,10 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    SplitButtonModule
+    SplitButtonModule,
+    FullCalendarModule,
+    InputTextModule,
+    ChartModule
   ],
   providers: [
     ApiService,

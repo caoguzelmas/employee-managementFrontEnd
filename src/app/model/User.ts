@@ -9,6 +9,6 @@ export class User {
   userRole: string;
   createdAt: string;
   updatedAt: string;
-  employee: Employee;
+  employee: Employee =  new Employee();
 
 }

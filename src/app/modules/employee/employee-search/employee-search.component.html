@@ -1,4 +1,4 @@
-<p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="employees" [paginator]="true" [rows]="10" dataKey="Name-Surname" selectionMode="single" [(selection)]="selectedEmployee">
+<p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="employees" [paginator]="true" [rows]="5" dataKey="Name-Surname" selectionMode="single" [(selection)]="selectedEmployee">
   <ng-template pTemplate="caption">
     LIST OF EMPLOYEES
 
@@ -32,29 +32,27 @@
         <!--        MAYBE......-->
       </th>
     </tr>
-
-
   </ng-template>
   <ng-template let-employee pTemplate="body">
     <tr [pSelectableRow]="selectedEmployee" [pEditableRow]="selectedEmployee">
       <td>{{employee.firstName}}</td>
       <td>{{employee.lastName}}</td>
       <td>{{employee.title}}</td>
-      <td>
-        <!--        <img src="assets/showcase/images/demo/car/{{rowData.brand}}.png" style="width: 50px; margin-right: 1em; vertical-align: middle;">-->
-        {{employee.department}}
-      </td>
+      <td>{{employee.department}}</td>
       <td>{{employee.eMail}}</td>
       <td>{{employee.phoneNumber}}</td>
       <td style="width: 8em; text-align: center;">
         <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" (click)="updateEmployee(employee)"></button>
       </td>
     </tr>
+
+
+
     <p-dialog  [(visible)]="employee.id === updateDialogID" closeIcon="false" class="test">
       <p-header>
         <span *ngIf="!updateConfirmationDialog">Detail of Employee</span>
         <span *ngIf="updateConfirmationDialog">Update Employee</span>
-        <button type="button" class="dialog-update-button" pButton icon="pi pi-pencil" (click)="updateDialog()"></button>
+        <button *ngIf="currentUser.user.userRole === 'Admin'" type="button" class="dialog-update-button" pButton icon="pi pi-pencil" (click)="updateDialog()"></button>
       </p-header>
       <div class="ui-grid-row">
         <div class="ui-grid-col-2">
@@ -70,7 +68,6 @@
           Last Name :
         </div>
         <div class="ui-grid-col-6" style="padding-left: 10px">
-
           <input [disabled]="!updateConfirmationDialog" type="text" pInputText [placeholder]="employee.lastName"
                  [(ngModel)]="employee.lastName"/>
         </div>
@@ -112,10 +109,15 @@
         </div>
       </div>
       <p-footer>
-        <button pButton type="button" label="Cancel" class="ui-button-warning" (click)="cancelUpdate()"></button>
-        <button [disabled]="!updateConfirmationDialog" pButton type="button" label="Save" class="ui-button-success" (click)="confirmUpdate(employee)"></button>
+        <button *ngIf="currentUser.user.userRole === 'Admin'" pButton type="button" label="Cancel" class="ui-button-warning" (click)="cancelUpdate()"></button>
+        <button *ngIf="currentUser.user.userRole === 'Admin'" [disabled]="!updateConfirmationDialog" pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteEmployee(employee)"></button>
+        <button *ngIf="currentUser.user.userRole === 'Employee'" pButton type="button" label="Back" class="ui-button-warning" (click)="cancelUpdate()"></button>
+        <button *ngIf="currentUser.user.userRole === 'Admin'" [disabled]="!updateConfirmationDialog" pButton type="button" label="Save" class="ui-button-success" (click)="confirmUpdate(employee)"></button>
       </p-footer>
     </p-dialog>
+
+
+
   </ng-template>
 </p-table>
 

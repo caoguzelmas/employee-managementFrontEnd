@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ExpenseSearchComponent} from './expense-search/expense-search.component';
 import {ExpenseCreateComponent} from './expense-create/expense-create.component';
+import {ExpenseDetailComponent} from './expense-detail/expense-detail.component';
 
 const routes: Routes = [
   { path: 'search', component: ExpenseSearchComponent},
+  { path: 'detail', component: ExpenseDetailComponent},
   { path: 'create', component: ExpenseCreateComponent}
 ];
 

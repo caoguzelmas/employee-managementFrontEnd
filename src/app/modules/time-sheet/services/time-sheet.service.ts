@@ -6,6 +6,8 @@ import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Expense} from '../../../model/Expense';
 import {TimeSheet} from '../../../model/TimeSheet';
+import {User} from '../../../model/User';
+import {TimeSheetAndUserBody} from '../../../model/TimeSheetAndUserBody';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,14 @@ export class TimeSheetService {
 
   getEmployeesHasTimeSheets(page: number, size: number) {
     return this.httpClient.get(this.baseUrl + '/employees/getEmployeesHasTimeSheets?page' + page + '&size' + size);
+  }
+
+  getAllTimeSheetsOfEmployeeAsList(currentUser: User) {
+    return this.httpClient.post(this.baseUrl + '/timeSheets/getTimeSheetsOfEmployeeAsList', currentUser);
+  }
+
+  getTimeSheetOfEmployeeByDate(timeSheetAndUserBody: TimeSheetAndUserBody) {
+    return this.httpClient.post(this.baseUrl + '/timeSheets/getTimeSheetByDate', timeSheetAndUserBody);
   }
 }
 

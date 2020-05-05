@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Expense} from '../../../model/Expense';
 import {ExpenseService} from '../services/expense.service';
 import {ExpenseType} from '../../../model/ExpenseType';
-import {User} from '../../../model/User';
-import {environment} from '../../../../environments/environment';
 import {Employee} from '../../../model/Employee';
 import {ApiService} from '../../../services/api.service';
+import {CurrentUser} from '../../../model/CurrentUser';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-expense-create',
@@ -17,40 +17,31 @@ export class ExpenseCreateComponent implements OnInit {
   selectedDate: Date;
   expenseTypes: ExpenseType;
   selectedExpenseType: ExpenseType;
-  currentUser: User;
+  currentUser: CurrentUser;
 
-  constructor(private expenseService: ExpenseService, private apiService: ApiService) { }
+  constructor(private expenseService: ExpenseService, private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.expenseCreationBody = new Expense();
     this.expenseCreationBody.employee = new Employee();
-    this.currentUser = environment.currentUser;
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.apiService.getAllExpenseTypes().subscribe((response: any) => {
       this.expenseTypes = response;
     });
   }
 
   saveExpense() {
-    console.log('ok');
-
-  //  console.log(this.expenseCreationBody);
-    this.expenseService.createExpense(this.expenseCreationBody).subscribe((response: any) => {
-      console.log(response);
-    });
-
+    this.expenseCreationBody.employee = this.currentUser.user.employee;
+    this.expenseService.createExpense(this.expenseCreationBody).subscribe();
+    this.router.navigate(['/expense/detail']);
   }
 
   checkEmployeeBodyValidation() {
     this.saveExpense();
   }
 
-  setDates() {
-    this.expenseCreationBody.expenseMonth = this.selectedDate.getMonth() + 1;
-    this.expenseCreationBody.expenseYear = this.selectedDate.getFullYear();
-  }
-
   setValue() {
     this.expenseCreationBody.expenseType = this.selectedExpenseType.name;
-    this.expenseCreationBody.employee.id = this.currentUser.employee.id;
+
   }
 }

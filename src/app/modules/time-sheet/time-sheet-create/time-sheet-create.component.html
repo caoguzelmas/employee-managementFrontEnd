@@ -1,1 +1,87 @@
-<p>time-sheet-create works!</p>
+<p-panel header="CREATE & SEARCH TIME SHEET">
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    <div class="ui-grid-col-6 time-sheet-body">
+      <p-calendar [(ngModel)]="timeSheetBody.timeSheetDate" [defaultDate]="defaultDate" (onSelect)="timeSheetDateSelect()" [inline]="true" [showWeek]="true">
+
+<!--        <ng-template pTemplate="date" let-date>
+          <span [ngStyle]="{backgroundColor: funct(date) ? '#5cb85c' : 'inherit'}" style="border-radius:20%">{{date.day}}</span>
+        </ng-template>-->
+
+      </p-calendar>
+    </div>
+    <div class="ui-grid-col-5 time-sheet-body" *ngIf="isSelectedDateNull">
+      <div class="ui-grid-row" style="padding-top: 50px">
+        <div class="ui-grid-col-3" style="padding-left: 20px">
+          Hours:
+        </div>
+        <div class="ui-grid-col-6">
+          <div class="ui-inputgroup">
+            <input type="text" pInputText placeholder="Hours" style="background-color: #FFFFFF" [(ngModel)]="timeSheetBody.hours">
+            <span class="ui-inputgroup-addon">Hours</span>
+          </div>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-3" style="padding-left: 20px">
+          Project :
+        </div>
+        <div class="ui-grid-col-6">
+          <p-dropdown [options]="projects" optionLabel="name" (onChange)="setProject()" [(ngModel)]="selectedProject" placeholder="Select Project"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-3" style="padding-left: 20px">
+          Description :
+        </div>
+        <div class="ui-grid-col-6">
+          <textarea pInputTextarea [(ngModel)]="timeSheetBody.description" rows="5" cols="50" placeholder="Description"></textarea>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-2"></div>
+        <div class="ui-grid-col-6">
+        </div>
+        <div>
+          <button pButton type="button" label="Cancel" class="ui-button-warning" routerLink="/search-expenses"></button>
+        </div>
+        <div style="padding-left: 20px">
+          <button pButton type="button" label="Save" class="ui-button-success" (click)="saveTimeSheet()"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-grid-col-5 time-sheet-body" *ngIf="!isSelectedDateNull">
+      <div class="ui-grid-row" style="padding-top: 50px">
+        <div class="ui-grid-col-3" style="padding-left: 20px">
+          Hours:
+        </div>
+        <div class="ui-grid-col-6">
+          <div class="ui-inputgroup">
+            <input type="text" [disabled]="!isSelectedDateNull" pInputText placeholder="Hours" style="background-color: #FFFFFF" [(ngModel)]="createdTimeSheetOnSelectedDate.hours">
+            <span class="ui-inputgroup-addon">Hours</span>
+          </div>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-3" style="padding-left: 20px">
+          Project :
+        </div>
+        <div class="ui-grid-col-6">
+          <p-dropdown [options]="projects" [disabled]="!isSelectedDateNull" optionLabel="name" (onChange)="setProject()"
+                      [(ngModel)]="createdTimeSheetOnSelectedDate.project"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-3" style="padding-left: 20px">
+          Description :
+        </div>
+        <div class="ui-grid-col-6">
+          <textarea pInputTextarea [disabled]="!isSelectedDateNull" [(ngModel)]="createdTimeSheetOnSelectedDate.description" rows="5" cols="50" placeholder="Description"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</p-panel>

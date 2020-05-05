@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Employee} from '../../../model/Employee';
 import {EmployeeService} from '../services/employee.service';
 import {ApiService} from '../../../services/api.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-employee-create',
@@ -11,7 +12,7 @@ import {ApiService} from '../../../services/api.service';
 export class EmployeeCreateComponent implements OnInit {
   employeeCreationBody: Employee;
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private router: Router) { }
 
   ngOnInit(): void {
     this.employeeCreationBody = new Employee();
@@ -19,9 +20,8 @@ export class EmployeeCreateComponent implements OnInit {
 
   saveEmployee() {
     console.log('ok');
-    this.employeeService.createEmployee(this.employeeCreationBody).subscribe(res => {
-      console.log(res);
-    });
+    this.employeeService.createEmployee(this.employeeCreationBody).subscribe();
+    this.router.navigate(['/employee/search']);
   }
 
   checkEmployeeBodyValidation() {

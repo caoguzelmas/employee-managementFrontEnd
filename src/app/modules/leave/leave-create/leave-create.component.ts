@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {LeaveType} from '../../../model/LeaveType';
 import {Leave} from '../../../model/Leave';
 import {LeaveService} from '../services/leave.service';
-import {User} from '../../../model/User';
-import {Employee} from '../../../model/Employee';
-import {environment} from '../../../../environments/environment';
-import {ExpenseService} from '../../expense/services/expense.service';
 import {ApiService} from '../../../services/api.service';
+import {CurrentUser} from '../../../model/CurrentUser';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-leave-create',
@@ -18,19 +16,17 @@ export class LeaveCreateComponent implements OnInit {
   leaveTypes: LeaveType;
   selectedLeaveType: LeaveType;
   leaveCreationBody: Leave;
-  currentUser: User;
+  currentUser: CurrentUser;
 
-  constructor(private leaveService: LeaveService, private apiService: ApiService) { }
+  constructor(private leaveService: LeaveService, private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.selectedDate = new Date();
     this.leaveCreationBody = new Leave();
-    this.leaveCreationBody.employee = new Employee();
-    this.currentUser = environment.currentUser;
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.apiService.getAllLeaveTypes().subscribe((response: any) => {
       this.leaveTypes = response;
     });
-    this.leaveCreationBody.employee.id = this.currentUser.employee.id;
   }
 
   setDates() {
@@ -46,10 +42,9 @@ export class LeaveCreateComponent implements OnInit {
   }
 
   saveLeave() {
-    this.leaveService.createLeave(this.leaveCreationBody).subscribe((response: any) => {
-      console.log(response);
-    });
-    console.log(this.leaveCreationBody);
+    this.leaveCreationBody.employee = this.currentUser.user.employee;
+    this.leaveService.createLeave(this.leaveCreationBody).subscribe();
+    this.router.navigate(['/leave/detail']);
   }
 
   calculateNumberOfDays(startDate: Date, endDate: Date) {

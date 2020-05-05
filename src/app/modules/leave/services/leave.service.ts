@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from '../../../services/api.service';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Leave} from '../../../model/Leave';
+import {User} from '../../../model/User';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +32,9 @@ export class LeaveService {
 
   updateLeave(leaveBody: Leave, leaveId: number) {
     return this.httpClient.put(this.baseUrl + '/leaves/' + leaveId, leaveBody);
+  }
+
+  getAllLeavesOfEmployee(page: number, size: number, currentUser: User) {
+    return this.httpClient.post(this.baseUrl + '/leaves/getLeavesByEmployeeIdWithPagination?page' + page + '&size' + size, currentUser);
   }
 }

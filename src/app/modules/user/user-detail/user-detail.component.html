@@ -1,1 +1,64 @@
-<p>user-detail works!</p>
+<p-panel header="USER DETAIL & UPDATE">
+  <p-header>
+    <button type="button" class="dialog-update-button" pButton icon="pi pi-pencil" (click)="updateDialog()"></button>
+  </p-header>
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        Employee :
+      </div>
+      <div class="ui-grid-col-6">
+        <span>{{user.employee.firstName}} {{user.employee.lastName}}</span>
+      </div>
+    </div>
+    <div class="ui-grid-row" style="padding-top: 10px">
+      <div class="ui-grid-col-2">
+        E-Mail :
+      </div>
+      <div class="ui-grid-col-6">
+        <span>{{user.eMail}}</span>
+      </div>
+    </div>
+    <div class="ui-grid-row" style="padding-top: 10px">
+      <div class="ui-grid-col-2">
+        Username :
+      </div>
+      <div class="ui-grid-col-6">
+        <input [disabled]="!updateConfirmationDialog" type="text" pInputText placeholder="Username" [(ngModel)]="user.userName"/>
+      </div>
+    </div>
+
+    <div class="ui-grid-row" style="padding-top: 10px">
+      <div class="ui-grid-col-2">
+        Password :
+      </div>
+      <div class="ui-grid-col-2">
+        <div class="ui-inputgroup">
+          <input [disabled]="!updateConfirmationDialog" [showPassword]="isPasswordShowing" type="password" placeholder="Password" pPassword [(ngModel)]="user.password"/>
+          <button pButton type="button" icon="pi pi-eye" class="ui-button-warn" (click)="showPassword()"></button>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row" style="padding-top: 10px">
+      <div class="ui-grid-col-2">
+        User Role :
+      </div>
+      <div class="ui-grid-col-2">
+        <p-dropdown [disabled]="true" [options]="userRoleTypes" optionLabel="name" [(ngModel)]="selectedUserRoleType"
+                    (onChange)="setValue(user)" [placeholder]="user.userRole"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"></div>
+      <div class="ui-grid-col-6">
+      </div>
+      <div>
+        <button [disabled]="!updateConfirmationDialog" pButton type="button" label="Cancel" class="ui-button-warning" (click)="cancelUpdate()"></button>
+      </div>
+      <div>
+        <button [disabled]="!updateConfirmationDialog" pButton type="button" label="Save" class="ui-button-success" (click)="updateUser()"></button>
+      </div>
+    </div>
+  </div>
+</p-panel>

@@ -3,12 +3,11 @@ import {ExpenseType} from './ExpenseType';
 
 export class Expense {
   expenseId: number;
-  expenseMonth: number;
-  expenseYear: number;
+  expenseDate: Date;
   totalAmount: number;
   updatedAt: string;
   expenseType: string;
   description: string;
   createdAt: string;
-  employee: Employee;
+  employee: Employee = new Employee();
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Employee} from '../../model/Employee';
-import {environment} from '../../../environments/environment';
+import {MenuItem} from 'primeng';
+import {CurrentUser} from '../../model/CurrentUser';
 
 @Component({
   selector: 'app-header',
@@ -8,50 +9,75 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  items: any[];
+  adminPanelItems: any[];
+  employeePanelItems: any[];
   sampleEmployee: Employee;
-  splitButtonItems: any[];
+  splitButtonItems: MenuItem[];
+  currentUser: CurrentUser;
+  sidenav: any;
 
   constructor() { }
 
 
   ngOnInit(): void {
-    this.sampleEmployee = environment.currentUser.employee;
-    this.items = [
-      {label: 'Dashboard',
-       routerLink: '/dashboard'},
-      {label: 'Employees',
-       items: [
-         {label: 'Search Employees', icon: 'pi pi-fw pi-filter', routerLink: '/employee/search'},
-         {label: 'Create Employee (ONLY ADMIN)', icon: 'pi pi-fw pi-filter', routerLink: '/employee/create'}
-       ]},
-      {label: 'Expenses',
-        items: [
-          {label: 'Search Expenses (ONLY ADMIN)', icon: 'pi pi-fw pi-filter', routerLink: '/expense/search'},
-          {label: 'Create Expense', icon: 'pi pi-fw pi-filter', routerLink: '/expense/create'}
-        ]},
-      {label: 'Leaves',
-        items: [
-          {label: 'Search Leaves (ONLY ADMIN)', icon: 'pi pi-fw pi-filter', routerLink: '/leave/search'},
-          {label: 'Create Leave', icon: 'pi pi-fw pi-filter', routerLink: '/leave/create'}
-        ]},
-      {label: 'Time Sheets',
-        items: [
-          {label: 'Search Time Sheets (ONLY ADMIN)', icon: 'pi pi-fw pi-filter', routerLink: '/time-sheet/search'},
-          {label: 'CreateTime Sheets', icon: 'pi pi-fw pi-filter', routerLink: '/time-sheet/create'}
-        ]},
-      {label: 'Users (ADMIN ONLY)',
-        items: [
-          {label: 'Search Users', icon: 'pi pi-fw pi-filter', routerLink: '/user/search'},
-          {label: 'Create User', icon: 'pi pi-fw pi-filter', routerLink: '/user/create'}
-        ]}
-    ];
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (this.currentUser.user.userName === 'Admin') {
+      this.adminPanelItems = [
+        {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: '/dashboard'},
+        {label: 'Employees', icon: 'pi pi-fw pi-users',
+          items: [
+            {label: 'Search Employees', icon: 'pi pi-fw pi-users', routerLink: '/employee/search'},
+            {label: 'Create Employee (ONLY ADMIN)', icon: 'pi pi-fw pi-user-plus', routerLink: '/employee/create'}
+          ]},
+        {label: 'Expenses', icon: 'pi pi-fw pi-money-bill',
+          items: [
+            {label: 'All Created Expense Requests', icon: 'pi pi-fw pi-money-bill', routerLink: '/expense/search'}
+          ]},
+        {label: 'Leaves', icon: 'pi pi-fw pi-briefcase',
+          items: [
+            {label: 'All Created Leave Requests', icon: 'pi pi-fw pi-filter', routerLink: '/leave/search'}
+          ]},
+        {label: 'Time Sheets', icon: 'pi pi-fw pi-calendar',
+          items: [
+            {label: 'All Created Time Sheets', icon: 'pi pi-fw pi-calendar', routerLink: '/time-sheet/search'}
+          ]},
+        {label: 'Users', icon: 'pi pi-fw pi-key',
+          items: [
+            {label: 'All Users', icon: 'pi pi-fw pi-key', routerLink: '/user/search'},
+            {label: 'Create User', icon: 'pi pi-fw pi-plus-circle', routerLink: '/user/create'}
+          ]}
+      ];
+    } else {
+      this.employeePanelItems = [
+        {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: '/dashboard'},
+        {label: ' All Employees', icon: 'pi pi-fw pi-users',
+          items: [
+            {label: 'All Employees', icon: 'pi pi-fw pi-users', routerLink: '/employee/search'}
+          ]},
+        {label: 'Expense Transactions', icon: 'pi pi-fw pi-money-bill',
+          items: [
+            {label: 'My Expense Requests', icon: 'pi pi-fw pi-money-bill', routerLink: '/expense/detail'},
+            {label: 'Create Expense Request', icon: 'pi pi-fw pi-plus-circle', routerLink: '/expense/create'}
+          ]},
+        {label: 'Leave Transactions', icon: 'pi pi-fw pi-briefcase',
+          items: [
+            {label: 'My Leave Requests', icon: 'pi pi-fw pi-briefcase', routerLink: '/leave/detail'},
+            {label: 'Create Leave Request', icon: 'pi pi-fw pi-plus-circle', routerLink: '/leave/create'}
+          ]},
+        {label: 'Time Sheet Transactions', icon: 'pi pi-fw pi-calendar',
+          items: [
+            {label: 'My Time Sheets / Create Time Sheet', icon: 'pi pi-fw pi-calendar-plus', routerLink: '/time-sheet/create'}
+          ]},
+        {label: 'User Transactions', icon: 'pi pi-fw pi-key',
+          items: [
+            {label: 'My User Profile', icon: 'pi pi-fw pi-key', routerLink: '/user/detail'}
+          ]}
+      ];
+    }
+
     this.splitButtonItems = [
-      {label: 'Profile Detail', icon: 'pi pi-info' , routerLink: ['/employee-detail']},
-      {label: 'Sign Out', icon: 'pi pi-cog'},
-      {separator: true},
-      {label: 'Update', icon: 'pi pi-refresh'},
-      {label: 'Delete', icon: 'pi pi-times'},
+      {label: 'Profile Detail', icon: 'pi pi-info' , routerLink: ['/employee/detail']},
+      {label: 'Sign Out', icon: 'pi pi-cog', routerLink: ['/login'] }
     ];
   }
 }

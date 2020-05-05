@@ -38,7 +38,7 @@ export class LeaveSearchComponent implements OnInit {
     ];
     this.apiService.getAllLeaveTypes().subscribe((response: any) => {
       this.leaveTypes = response;
-    });
+  });
     this.paginate({page: 0, size: 5});
   }
 

@@ -40,10 +40,7 @@
       <td>{{user.userId}}</td>
       <td>{{user.userName}}</td>
       <td>{{user.userRole}}</td>
-      <td>
-        <!--        <img src="assets/showcase/images/demo/car/{{rowData.brand}}.png" style="width: 50px; margin-right: 1em; vertical-align: middle;">-->
-        {{user.employee}}
-      </td>
+      <td>{{user.employee.firstName + ' ' + user.employee.lastName}}</td>
       <td>{{user.createdAt}}</td>
       <td style="width: 8em; text-align: center;">
         <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" (click)="updateUser(user)"></button>
@@ -53,9 +50,18 @@
       <p-header>
         <span *ngIf="!updateConfirmationDialog">Detail of Leave</span>
         <span *ngIf="updateConfirmationDialog">Update Leave</span>
-        <button type="button" class="dialog-update-button" pButton icon="pi pi-pencil" (click)="updateDialog()"></button>
+        <button *ngIf="currentUser.user.userRole === 'Employee'" type="button" class="dialog-update-button" pButton icon="pi pi-pencil" (click)="updateDialog()"></button>
       </p-header>
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid"  [style]="{'height': '250px'}">
+        <div class="ui-grid-row" style="padding-top: 20px">
+          <div class="ui-grid-col-2">
+            Employee :
+          </div>
+          <div class="ui-grid-col-6">
+            <span>{{user.employee.firstName}}  {{user.employee.lastName}}</span>
+          </div>
+        </div>
+
         <div class="ui-grid-row" style="padding-top: 20px">
           <div class="ui-grid-col-2">
             E-Mail :
@@ -99,8 +105,10 @@
         </div>
       </div>
       <p-footer>
-        <button pButton type="button" label="Cancel" class="ui-button-warning" (click)="cancelUpdate()"></button>
-        <button pButton type="button" [disabled]="!updateConfirmationDialog" label="Save" class="ui-button-success" (click)="confirmUpdate(user)"></button>
+        <button *ngIf="currentUser.user.userRole === 'Employee'" pButton type="button" label="Cancel" class="ui-button-warning" (click)="cancelUpdate()"></button>
+        <button *ngIf="currentUser.user.userRole === 'Admin'" pButton type="button" label="Back" class="ui-button-warning" (click)="cancelUpdate()"></button>
+        <button *ngIf="currentUser.user.userRole === 'Employee'" pButton type="button" [disabled]="!updateConfirmationDialog" label="Save" class="ui-button-success" (click)="confirmUpdate(user)"></button>
+        <button *ngIf="currentUser.user.userRole === 'Admin'" pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteUser(user)"></button>
       </p-footer>
     </p-dialog>
   </ng-template>

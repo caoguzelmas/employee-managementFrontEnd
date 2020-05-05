@@ -1,1 +1,87 @@
-<p>leave-detail works!</p>
+<p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="leaves" [paginator]="true" [rows]="5" dataKey="Name-Surname" selectionMode="single" [(selection)]="selectedLeave">
+  <ng-template pTemplate="caption">
+    LIST OF LEAVE REQUESTS
+    <p-tabMenu [model]="leaveTabItems"></p-tabMenu>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+        <input *ngSwitchCase="'Name-Surname'" pInputText type="text" placeholder="Starts with" class="ui-column-filter" style="width: 100%;" (input)="dt.filter($event.target, col.field, 'startsWith')">
+      </th>
+      <th style="width: 8em; text-align: center;">
+        <button pButton type="button" icon="pi pi-cog"></button>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template let-leave pTemplate="body">
+    <tr [pSelectableRow]="leaves" [pEditableRow]="leaves">
+      <td>{{leave.leaveID}}</td>
+      <td>{{leave.leaveType}}</td>
+      <td>{{leave.startDate}}</td>
+      <td>{{leave.endDate}}</td>
+      <td>{{leave.createdAt}}</td>
+      <td>{{leave.requestedNumberOfDays}}</td>
+      <td style="width: 8em; text-align: center;">
+        <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" (click)="updateLeave(leave)"></button>
+      </td>
+    </tr>
+    <p-dialog [(visible)]="leave.leaveID === updateDialogID" closeIcon="false">
+      <p-header>
+        <span *ngIf="!updateConfirmationDialog">Detail of Leave</span>
+        <span *ngIf="updateConfirmationDialog">Update Leave</span>
+        <button type="button" class="dialog-update-button" pButton icon="pi pi-pencil" (click)="updateDialog()"></button>
+      </p-header>
+      <div class="ui-grid-col-6" [style]="{'height': '400px'}">
+        <div class="ui-grid-row" style="padding-top: 20px">
+          Starting Day of Leave Request :
+        </div>
+        <div class="ui-grid-row" style="padding-top: 10px">
+          <p-calendar (onSelect)="setDates(leave)" [inputStyle]="{'width':'350px'}" [disabled]="!updateConfirmationDialog" [(ngModel)]="leave.startDate" [defaultDate]="exStartingDate" [showIcon]="true"></p-calendar>
+        </div>
+        <div class="ui-grid-row" style="padding-top: 20px">
+          Description :
+        </div>
+        <div class="ui-grid-row" style="padding-top: 10px">
+          <textarea [disabled]="!updateConfirmationDialog" pInputTextarea [(ngModel)]="leave.description" rows="5" cols="40" [placeholder]="leave.description"></textarea>
+        </div>
+      </div>
+      <div class="ui-grid-col-6">
+        <div class="ui-grid-row" style="padding-top: 20px">
+          Ending Day of Leave Request :
+        </div>
+        <div class="ui-grid-row" style="padding-top: 10px">
+          <p-calendar (onSelect)="setDates(leave)" [inputStyle]="{'width':'350px'}" [disabled]="!updateConfirmationDialog" [(ngModel)]="leave.endDate" [defaultDate]="exEndingDate" [showIcon]="true"></p-calendar>
+        </div>
+
+        <div class="ui-grid-row" style="padding-top: 50px">
+          <div class="ui-grid-col-3">
+            Leave Type :
+          </div>
+          <div class="ui-grid-col-3">
+            <p-dropdown [disabled]="!updateConfirmationDialog" [options]="leaveTypes" optionLabel="name" (onChange)="setValue(leave)" [(ngModel)]="selectedLeaveType"
+                        [placeholder]="leave.leaveType"></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-grid-row" style="padding-top: 20px">
+          <div class="ui-grid-col-3" >
+            Number of Requested Leave Day(s) :
+          </div>
+          <div class="ui-grid-col-6">
+            <div class="ui-inputgroup">
+              <input type="text" pInputText placeholder="Day(s)" disabled="true" style="background-color: #FFFFFF"
+                     [(ngModel)]="leave.requestedNumberOfDays" [placeholder]="leave.requestedNumberOfDays">
+              <span class="ui-inputgroup-addon">Day(s)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-footer>
+        <button pButton type="button" label="Cancel" class="ui-button-warning" (click)="cancelUpdate()"></button>
+        <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteLeave(leave)"></button>
+        <button pButton type="button" [disabled]="!updateConfirmationDialog" label="Save" class="ui-button-success" (click)="confirmUpdate(leave)"></button>
+      </p-footer>
+    </p-dialog>
+  </ng-template>
+</p-table>

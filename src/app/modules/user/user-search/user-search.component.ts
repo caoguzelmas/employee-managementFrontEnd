@@ -3,6 +3,7 @@ import {User} from '../../../model/User';
 import {UserService} from '../services/user.service';
 import {UserRoleTypes} from '../../../model/UserRoleTypes';
 import {ApiService} from '../../../services/api.service';
+import {CurrentUser} from '../../../model/CurrentUser';
 
 @Component({
   selector: 'app-user-search',
@@ -19,6 +20,7 @@ export class UserSearchComponent implements OnInit {
   userRoleTypes: UserRoleTypes;
   userRoleSelect: UserRoleTypes;
   isPasswordShowing = false;
+  currentUser: CurrentUser;
 
   constructor(private userService: UserService, private apiService: ApiService) { }
 
@@ -35,6 +37,7 @@ export class UserSearchComponent implements OnInit {
       { field: this.filterBodyUser.createdAt, header: 'Creation Date' }
     ];
     this.paginate({page: 0, size: 5});
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   paginate($event: any) {
@@ -62,6 +65,7 @@ export class UserSearchComponent implements OnInit {
     this.userService.updateUser(userUpdateBody, userUpdateBody.userId).subscribe();
     this.updateDialogID = '';
     this.updateConfirmationDialog = false;
+    this.ngOnInit();
   }
 
   ShowPassword() {
@@ -70,5 +74,12 @@ export class UserSearchComponent implements OnInit {
 
   setUserRole(user: User) {
     user.userRole = this.userRoleSelect.name;
+  }
+
+  deleteUser(userToDelete: User) {
+    this.userService.deleteUser(userToDelete.userId).subscribe();
+    this.updateDialogID = '';
+    this.updateConfirmationDialog = false;
+    this.ngOnInit();
   }
 }

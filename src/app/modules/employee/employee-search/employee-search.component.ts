@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {EmployeeService} from '../services/employee.service';
 import {Employee} from '../../../model/Employee';
+import {User} from '../../../model/User';
+import {CurrentUser} from '../../../model/CurrentUser';
 
 @Component({
   selector: 'app-employee-search',
@@ -15,12 +17,16 @@ export class EmployeeSearchComponent implements OnInit {
   updateConfirmationDialog = false;
   employeeUpdateBody: Employee;
   updateDialogID: any;
+  currentUser: CurrentUser;
 
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.employeeUpdateBody = new Employee();
     this.filterBodyEmployee =  new Employee();
+    this.currentUser = new CurrentUser();
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log(this.currentUser.user.userRole);
     this.cols = [
       { field: this.filterBodyEmployee.firstName, header: 'Name' },
       { field: this.filterBodyEmployee.lastName, header: 'Surname' },
@@ -64,5 +70,12 @@ export class EmployeeSearchComponent implements OnInit {
   confirmUpdate(employeeUpdateBody: Employee) {
     this.employeeService.updateEmployee(employeeUpdateBody, employeeUpdateBody.id).subscribe();
     this.updateConfirmationDialog = false;
+  }
+
+  deleteEmployee(employeeToDelete: Employee) {
+    this.employeeService.deleteEmployee(employeeToDelete.id).subscribe();
+    this.updateDialogID = '';
+    this.updateConfirmationDialog = false;
+    this.ngOnInit();
   }
 }

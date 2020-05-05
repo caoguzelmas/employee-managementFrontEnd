@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {Employee} from '../../../model/Employee';
 import {ApiService} from '../../../services/api.service';
+import {User} from '../../../model/User';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +47,9 @@ export class EmployeeService {
 
   updateEmployee(employeeBody: Employee, id: number) {
     return this.httpClient.put(this.baseUrl + '/employees/' + id, employeeBody);
+  }
+
+  getEmployeeByUser(userBody: User) {
+    return this.httpClient.post(this.baseUrl + '/employees/getEmployeeByUser', userBody);
   }
 }

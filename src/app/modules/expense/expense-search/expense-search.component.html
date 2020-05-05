@@ -1,7 +1,6 @@
-<p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="expenses" [paginator]="true" [rows]="10" dataKey="Name-Surname" selectionMode="single" [(selection)]="selectedExpense">
+<p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="expenses" [paginator]="true" [rows]="5" dataKey="Name-Surname" selectionMode="single" [(selection)]="selectedExpense">
   <ng-template pTemplate="caption">
     LIST OF EMPLOYEES
-    <p-tabMenu [model]="expenseTabItems" ></p-tabMenu>
   </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -29,50 +28,59 @@
         <!--        MAYBE......-->
       </th>
     </tr>
-
-
   </ng-template>
   <ng-template let-expense pTemplate="body">
     <tr [pSelectableRow]="expenses" [pEditableRow]="expenses">
       <td>{{expense.expenseId}}</td>
-      <td>{{expense.employee}}</td>
-      <td>{{expense.expenseMonth}}</td>
-      <td>
-        <!--        <img src="assets/showcase/images/demo/car/{{rowData.brand}}.png" style="width: 50px; margin-right: 1em; vertical-align: middle;">-->
-        {{expense.expenseYear}}
-      </td>
+      <td>{{expense.employee.firstName + ' ' + expense.employee.lastName}}</td>
+      <td>{{expense.expenseDate}}</td>
       <td>{{expense.createdAt}}</td>
       <td>{{expense.totalAmount}}</td>
       <td style="width: 8em; text-align: center;">
         <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em" (click)="updateExpense(expense)"></button>
       </td>
     </tr>
-    <p-dialog  [(visible)]="expense.id === updateDialogID" closeIcon="false" class="test">
+    <p-dialog [(visible)]="expense.expenseId === updateDialogID" closeIcon="false" closeOnEscape="true">
       <p-header>
-        <span *ngIf="!updateConfirmationDialog">Detail of Employee</span>
-        <span *ngIf="updateConfirmationDialog">Update Employee</span>
-        <button type="button" class="dialog-update-button" pButton icon="pi pi-pencil" (click)="updateDialog()"></button>
+        <span>Detail of Expense</span>
       </p-header>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2">
-          First Name :
-        </div>
-        <div class="ui-grid-col-6" style="padding-left: 10px">
-          <span *ngIf="!updateConfirmationDialog" class="size-10 weight-500">{{expense.totalAmount}}</span>
-          <input *ngIf="updateConfirmationDialog" type="text" pInputText
-                 [(ngModel)]="expense.totalAmount"/>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        Employee :
+      </div>
+      <div class="ui-grid-row" style="padding-top: 10px">
+        <span>{{expense.employee.firstName + ' ' + expense.employee.lastName}}</span>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        Starting Day of Leave Request :
+      </div>
+      <div class="ui-grid-row" style="padding-top: 10px">
+        <p-calendar (onSelect)="setDates(expense)" [inputStyle]="{'width':'350px'}" [disabled]="!updateConfirmationDialog" [(ngModel)]="expense.expenseDate" [defaultDate]="expense.expenseDate" [showIcon]="true"></p-calendar>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        Starting Day of Leave Request :
+      </div>
+      <div class="ui-grid-row" style="padding-top: 10px">
+        <p-dropdown [disabled]="!updateConfirmationDialog" [options]="expenseTypes" optionLabel="name" (onChange)="setValue()" [(ngModel)]="expense.expenseType"></p-dropdown>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        Description :
+      </div>
+      <div class="ui-grid-row" style="padding-top: 10px">
+        <textarea [disabled]="!updateConfirmationDialog" pInputTextarea [(ngModel)]="expense.description" rows="5" cols="40" [placeholder]="expense.description"></textarea>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        Total Amount :
+      </div>
+      <div class="ui-grid-row" style="padding-top: 10px">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon">$</span>
+          <input [disabled]="!updateConfirmationDialog" type="text" pInputText placeholder="Total Amount" [(ngModel)]="expense.totalAmount">
+          <span class="ui-inputgroup-addon">.00</span>
         </div>
       </div>
-
-
       <p-footer>
-        <button pButton type="button" label="Cancel" class="ui-button-warning" (click)="cancelUpdate()"></button>
-        <button pButton type="button" label="Save" class="ui-button-success" (click)="confirmUpdate(expense)"></button>
+        <button pButton type="button" label="Back" class="ui-button-warning" (click)="cancelUpdate()"></button>
       </p-footer>
-
-
     </p-dialog>
   </ng-template>
 </p-table>
-
-

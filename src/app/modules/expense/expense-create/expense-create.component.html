@@ -2,8 +2,8 @@
   <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
     <div class="ui-grid-col-6">
       <div class="ui-grid-row">
-        Expense Period (Month & Year) :
-        <p-calendar class="calendar" [(ngModel)]="selectedDate" [inline]="true" [showWeek]="true"  dateFormat="mm/yy" (onSelect)="setDates()" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+        Expense Date :
+        <p-calendar class="calendar" [(ngModel)]="expenseCreationBody.expenseDate" [inline]="true" [showWeek]="true"  dateFormat="mm/yy"  [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
       </div>
     </div>
     <div class="ui-grid-col-6">

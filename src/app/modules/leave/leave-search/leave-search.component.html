@@ -1,4 +1,4 @@
-<p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="leaves" [paginator]="true" [rows]="10" dataKey="Name-Surname" selectionMode="single" [(selection)]="selectedLeave">
+<p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="leaves" [paginator]="true" [rows]="5" dataKey="Name-Surname" selectionMode="single" [(selection)]="selectedLeave">
   <ng-template pTemplate="caption">
     LIST OF LEAVE REQUESTS
     <p-tabMenu [model]="leaveTabItems"></p-tabMenu>
@@ -18,7 +18,7 @@
   <ng-template let-leave pTemplate="body">
     <tr [pSelectableRow]="leaves" [pEditableRow]="leaves">
       <td>{{leave.leaveID}}</td>
-      <td>{{leave.employee}}</td>
+      <td>{{leave.employee.firstName + ' ' + leave.employee.lastName}}</td>
       <td>{{leave.leaveType}}</td>
       <td>{{leave.startDate}}</td>
       <td>{{leave.endDate}}</td>
@@ -39,6 +39,12 @@
           </div>
           <div class="ui-grid-row" style="padding-top: 10px">
             <p-calendar (onSelect)="setDates(leave)" [inputStyle]="{'width':'350px'}" [disabled]="!updateConfirmationDialog" [(ngModel)]="leave.startDate" [defaultDate]="exStartingDate" [showIcon]="true"></p-calendar>
+          </div>
+          <div class="ui-grid-row" style="padding-top: 20px">
+            Employee :
+          </div>
+          <div class="ui-grid-row" style="padding-top: 10px">
+            <span>{{leave.employee.firstName + ' ' + leave.employee.lastName}}</span>
           </div>
           <div class="ui-grid-row" style="padding-top: 20px">
             Description :

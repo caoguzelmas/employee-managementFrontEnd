@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Expense} from '../../../model/Expense';
 import {Employee} from '../../../model/Employee';
 import {ExpenseService} from '../services/expense.service';
+import {ApiService} from '../../../services/api.service';
 
 @Component({
   selector: 'app-expense-search',
@@ -13,26 +14,24 @@ export class ExpenseSearchComponent implements OnInit {
   expenses: Expense[];
   selectedExpense: Expense;
   filterBodyExpense: Expense;
-  expenseTabItems: any[];
   updateDialogID: any;
   updateConfirmationDialog = false;
+  expenseTypes: any;
 
-  constructor(private expenseService: ExpenseService) { }
+  constructor(private expenseService: ExpenseService, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.filterBodyExpense = new Expense();
     this.cols = [
       { field: this.filterBodyExpense.expenseId, header: 'Expense ID' },
       { field: this.filterBodyExpense.employee, header: 'Employee' },
-      { field: this.filterBodyExpense.expenseMonth, header: 'Expense Period (Month)' },
-      { field: this.filterBodyExpense.expenseYear, header: 'Expense Period (Year)' },
+      { field: this.filterBodyExpense.expenseDate, header: 'Expense Date' },
       { field: this.filterBodyExpense.createdAt, header: 'Creation Date' },
       { field: this.filterBodyExpense.totalAmount, header: 'Total Amount' }
     ];
-    this.expenseTabItems = [
-      {label: 'All Expenses', icon: 'pi pi-fw pi-calendar', routerLink: ['/expense/search']},
-      {label: 'Create New Expense', icon: 'pi pi-fw pi-pencil',  routerLink: ['/expense/create']}
-    ];
+    this.apiService.getAllExpenseTypes().subscribe((response: any) => {
+      this.expenseTypes = response;
+    });
     this.paginate({page: 0, size: 5});
   }
 
@@ -40,13 +39,14 @@ export class ExpenseSearchComponent implements OnInit {
     const page = $event.page;
     const size = $event.size;
     this.expenseService.getAllExpensesWithPagination(page, size).subscribe((response: any) => {
-      this.expenses = response.content;
       console.log(response.content);
+      this.expenses = response.content;
     });
   }
 
   updateExpense(expense: Expense) {
     this.updateDialogID = expense.expenseId;
+    expense.expenseDate = new Date(expense.expenseDate);
   }
 
   updateDialog() {
@@ -54,10 +54,15 @@ export class ExpenseSearchComponent implements OnInit {
   }
 
   cancelUpdate() {
+    this.updateDialogID = '';
+    this.updateConfirmationDialog = false;
+  }
+
+  setDates(expense) {
 
   }
 
-  confirmUpdate(expense: Expense) {
+  setValue() {
 
   }
 }

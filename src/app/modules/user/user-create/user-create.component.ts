@@ -4,6 +4,7 @@ import {UserRoleTypes} from '../../../model/UserRoleTypes';
 import {ApiService} from '../../../services/api.service';
 import {UserService} from '../services/user.service';
 import {environment} from '../../../../environments/environment';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-create',
@@ -17,7 +18,7 @@ export class UserCreateComponent implements OnInit {
   currentUser: User;
   isPasswordShowing =  false;
 
-  constructor(private userService: UserService, private apiService: ApiService) { }
+  constructor(private userService: UserService, private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.userCreationBody = new User();
@@ -27,9 +28,8 @@ export class UserCreateComponent implements OnInit {
   }
 
   saveUser() {
-    this.userService.createUser(this.userCreationBody).subscribe(res => {
-      console.log(res);
-    });
+    this.userService.createUser(this.userCreationBody).subscribe();
+    this.router.navigate(['/user/search']);
   }
 
   setValue() {

@@ -50,4 +50,8 @@ export class ApiService {
   getAllUserRoleTypes() {
     return this.httpClient.get(this.baseUrl + '/common/getAllUserRoleTypes');
   }
+
+  getAllProjects() {
+    return this.httpClient.get(this.baseUrl + '/common/getAllProjects');
+  }
 }

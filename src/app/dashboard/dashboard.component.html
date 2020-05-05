@@ -1,5 +1,105 @@
-<div class="content-wrapper">
-  <p>dashboard works!</p>
-</div>
+<p-panel header="MY EMPLOYEE PROFILE" *ngIf="currentUser.user.userRole === 'Employee'">
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    <div class="ui-grid-col-6">
+      <div class="ui-grid-row" style="padding-top: 10px">
+        <div class="ui-grid-col-2">
+          First Name :
+        </div>
+        <div class="ui-grid-col-6" style="padding-left: 20px">
+          <input type="text" [disabled]="true" pInputText  [(ngModel)]="currentEmployee.firstName"/>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-2">
+          Last Name :
+        </div>
+        <div class="ui-grid-col-6" style="padding-left: 20px">
+          <input type="text" [disabled]="true" pInputText  [(ngModel)]="currentEmployee.lastName"/>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-2">
+          Title :
+        </div>
+        <div class="ui-grid-col-6" style="padding-left: 20px">
+          <input type="text" [disabled]="true" pInputText placeholder="Title" [(ngModel)]="currentEmployee.title"/>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-2">
+          Department :
+        </div>
+        <div class="ui-grid-col-6" style="padding-left: 20px">
+          <input type="text" [disabled]="true" pInputText placeholder="Department" [(ngModel)]="currentEmployee.department"/>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-2">
+          E-Mail :
+        </div>
+        <div class="ui-grid-col-6" style="padding-left: 20px">
+          <input type="text" [disabled]="true" pInputText placeholder="E-Mail" [(ngModel)]="currentEmployee.eMail"/>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 20px">
+        <div class="ui-grid-col-2">
+          Phone Number :
+        </div>
+        <div class="ui-grid-col-6" style="padding-left: 20px">
+          <input type="text" [disabled]="true" pInputText placeholder="Phone Number" [(ngModel)]="currentEmployee.phoneNumber"/>
+        </div>
+      </div>
+    </div>
 
 
+
+    <div class="ui-grid-col-6" style="padding-left: 20px">
+
+      <div class="ui-grid-row" style="padding-top: 10px">
+        <div class="ui-grid-col-4">
+          Number Of Expense Request(s) :
+        </div>
+        <div class="ui-grid-col-4" style="padding-left: 20px">
+          <input type="text" [disabled]="true" pInputText [(ngModel)]="numberOfExpenseReqOfEmployee"/>
+        </div>
+        <div class="ui-grid-col-2" style="padding-left: 10px">
+          <p-button label="Detail" styleClass="ui-button-warning" routerLink="/expense/detail"></p-button>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 10px">
+        <div class="ui-grid-col-4">
+          Number Of Leave Request(s) :
+        </div>
+        <div class="ui-grid-col-4" style="padding-left: 20px">
+          <input type="text" [disabled]="true" pInputText [(ngModel)]="numberOfLeaveReqOfEmployee"/>
+        </div>
+        <div class="ui-grid-col-2" style="padding-left: 10px">
+          <p-button label="Detail" styleClass="ui-button-warning" routerLink="/leave/detail"></p-button>
+        </div>
+      </div>
+      <div class="ui-grid-row" style="padding-top: 10px">
+        <div class="ui-grid-col-4">
+          Number Of Time Sheet(s) :
+        </div>
+        <div class="ui-grid-col-4" style="padding-left: 20px">
+          <input type="text" [disabled]="true" pInputText [(ngModel)]="numberOfTimeSheetsOfEmployee"/>
+        </div>
+        <div class="ui-grid-col-2" style="padding-left: 10px">
+          <p-button label="Detail" styleClass="ui-button-warning" routerLink="/time-sheet/create"></p-button>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+</p-panel>
+
+<p-panel header="DASHBOARD" *ngIf="currentUser.user.userRole === 'Admin'">
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    <div class="ui-grid-col-8 test">
+      <p-chart type="bar" [data]="data"></p-chart>
+    </div>
+  </div>
+</p-panel>

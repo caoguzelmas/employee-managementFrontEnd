@@ -6,13 +6,14 @@
     <h1>Employee Management System</h1>
     <span class="menu-spacer"></span>
     <div>
-      <p-splitButton label="{{sampleEmployee.firstName + ' ' + sampleEmployee.lastName}}" [model]="splitButtonItems"></p-splitButton>
+      <p-splitButton class="user-options" label="{{currentUser.user.userName}}" [model]="splitButtonItems"></p-splitButton>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav class="sidenav-class">
-    <p-panelMenu [model]="items" [style]="{'width':'300px'}"></p-panelMenu>
+    <p-panelMenu *ngIf="currentUser.user.userRole === 'Admin'" [model]="adminPanelItems" [style]="{'width':'300px'}"></p-panelMenu>
+    <p-panelMenu *ngIf="currentUser.user.userRole === 'Employee'" [model]="employeePanelItems" [style]="{'width':'300px'}"></p-panelMenu>
   </mat-sidenav>
   <mat-sidenav-content>
     <div style="height: 88vh;">
