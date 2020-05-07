@@ -8,6 +8,7 @@ import {Expense} from '../../../model/Expense';
 import {TimeSheet} from '../../../model/TimeSheet';
 import {User} from '../../../model/User';
 import {TimeSheetAndUserBody} from '../../../model/TimeSheetAndUserBody';
+import {TimeIntervals} from '../../../model/TimeIntervals';
 
 @Injectable({
   providedIn: 'root'

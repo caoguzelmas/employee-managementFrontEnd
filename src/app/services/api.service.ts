@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
+import {TimeIntervals} from '../model/TimeIntervals';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,9 @@ export class ApiService {
 
   getAllProjects() {
     return this.httpClient.get(this.baseUrl + '/common/getAllProjects');
+  }
+
+  getAdminDashboardItemsBetweenDates(timeIntervalGroup: TimeIntervals) {
+    return this.httpClient.post(this.baseUrl + '/common/getAdminDashboardItems', timeIntervalGroup);
   }
 }

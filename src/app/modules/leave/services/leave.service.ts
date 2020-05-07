@@ -4,6 +4,7 @@ import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Leave} from '../../../model/Leave';
 import {User} from '../../../model/User';
+import {TimeIntervals} from '../../../model/TimeIntervals';
 
 @Injectable({
   providedIn: 'root'

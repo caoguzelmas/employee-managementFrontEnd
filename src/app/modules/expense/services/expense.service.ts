@@ -42,8 +42,4 @@ export class ExpenseService {
     return this.httpClient.get(this.baseUrl + '/expenses/getAllExpensesWithPagination?page' + page + '&size' + size);
 
   }
-
-  getExpensesBetweenDates(timeIntervals: TimeIntervals) {
-    return this.httpClient.post(this.baseUrl + '/expenses/getExpensesBetweenDates', timeIntervals);
-  }
 }
