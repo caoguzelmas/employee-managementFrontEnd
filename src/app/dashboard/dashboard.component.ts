@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
       this.timeIntervalGroup.endingDate.setDate(30);
       this.apiService.getAdminDashboardItemsBetweenDates(this.timeIntervalGroup).subscribe((response: any) => {
         this.data = {
-          labels: [monthNames[this.currentMonth]],
+          labels: [monthNames[this.currentMonth] + ', ' + '2020'],
           datasets: [
             {
               label: 'Created Expense Requests',

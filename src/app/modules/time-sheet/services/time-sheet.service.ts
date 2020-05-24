@@ -50,5 +50,9 @@ export class TimeSheetService {
   getTimeSheetOfEmployeeByDate(timeSheetAndUserBody: TimeSheetAndUserBody) {
     return this.httpClient.post(this.baseUrl + '/timeSheets/getTimeSheetByDate', timeSheetAndUserBody);
   }
+
+  getTimeSheetOfEmployeeById(emloyeeId: number) {
+    return this.httpClient.get(this.baseUrl + '/timeSheets/getTimeSheetsOfEmployeeById/' + emloyeeId);
+  }
 }
 

@@ -33,7 +33,8 @@ export class LeaveCreateComponent implements OnInit {
     this.leaveCreationBody.startDate = this.selectedDate[0];
     this.selectedDate[1] !== null ? this.leaveCreationBody.endDate = this.selectedDate[1] : this.leaveCreationBody.endDate = undefined;
     if (this.leaveCreationBody.startDate !== null && this.leaveCreationBody.endDate !== null) {
-      this.leaveCreationBody.requestedNumberOfDays = this.calculateNumberOfDays(this.leaveCreationBody.startDate, this.leaveCreationBody.endDate);
+      this.leaveCreationBody.requestedNumberOfDays =
+        this.calculateNumberOfDays(this.leaveCreationBody.startDate, this.leaveCreationBody.endDate);
     }
   }
 

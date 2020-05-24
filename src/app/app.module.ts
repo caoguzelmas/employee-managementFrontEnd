@@ -32,7 +32,7 @@ import {ApiService} from './services/api.service';
 
 import {
   ButtonModule,
-  CalendarModule, ChartModule, DialogModule,
+  CalendarModule, ChartModule, DataViewModule, DialogModule,
   DropdownModule, FullCalendarModule, InputTextModule,
   MessageModule,
   PanelMenuModule,
@@ -112,7 +112,8 @@ import {ExpenseDetailComponent} from './modules/expense/expense-detail/expense-d
     SplitButtonModule,
     FullCalendarModule,
     InputTextModule,
-    ChartModule
+    ChartModule,
+    DataViewModule
   ],
   providers: [
     ApiService,

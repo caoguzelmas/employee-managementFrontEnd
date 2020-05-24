@@ -1,3 +1,4 @@
+import {TimeSheet} from './TimeSheet';
 
 export class Employee {
 
@@ -11,5 +12,6 @@ export class Employee {
   photo: string;
   createdAt: string;
   updatedAt: string;
+  timeSheets: TimeSheet[];
 
 }

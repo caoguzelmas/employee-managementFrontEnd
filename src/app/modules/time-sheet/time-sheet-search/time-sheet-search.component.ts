@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Employee} from '../../../model/Employee';
 import {EmployeeService} from '../../employee/services/employee.service';
 import {TimeSheetService} from '../services/time-sheet.service';
+import {TimeSheet} from '../../../model/TimeSheet';
+
 
 @Component({
   selector: 'app-time-sheet-search',
@@ -9,32 +11,48 @@ import {TimeSheetService} from '../services/time-sheet.service';
   styleUrls: ['./time-sheet-search.component.css']
 })
 export class TimeSheetSearchComponent implements OnInit {
-  cols: any[];
-  filterBodyEmployee: Employee;
   employees: Employee[];
-  selectedEmployee: Employee;
+  employeeIds: number[] = [];
+  dialogID: any;
+  dialogColumns: any[];
 
-  constructor(private timeSheetService: TimeSheetService) { }
+
+
+  constructor(private employeeService: EmployeeService, private timeSheetService: TimeSheetService) { }
 
   ngOnInit(): void {
-    this.filterBodyEmployee = new Employee();
-    this.cols = [
-      { field: this.filterBodyEmployee.firstName, header: 'Name' },
-      { field: this.filterBodyEmployee.lastName, header: 'Surname' },
-      { field: this.filterBodyEmployee.title, header: 'Title' },
-      { field: this.filterBodyEmployee.department, header: 'Department' },
-      { field: this.filterBodyEmployee, header: 'Time Sheet ID' }
+    this.dialogColumns = [
+      { header: 'Time Sheet ID' },
+      { header: 'Date' },
+      { header: 'Hours' },
+      { header: 'Project' },
+      { header: 'Description' }
     ];
-    this.paginate({page: 0, size: 5});
+    this.paginate({page: 0, size: 16});
   }
 
   paginate($event: any) {
     const page = $event.page;
     const size = $event.size;
-    this.timeSheetService.getEmployeesHasTimeSheets(page, size).subscribe((response: any) => {
+    this.employeeService.getAllEmployeesWithPagination(page, size).subscribe((response: any) => {
+      console.log(response);
       this.employees = response.content;
-      console.log(response.content);
+      this.employees.forEach(employee => {
+        this.timeSheetService.getTimeSheetOfEmployeeById(employee.id).subscribe((timeSheets: TimeSheet[]) => {
+          employee.timeSheets = timeSheets;
+          console.log(employee.timeSheets);
+          console.log(employee.timeSheets.map((x) => new Date(x.timeSheetDate)).sort().reverse());
+        });
+      });
     });
+
   }
 
+  showAllTimeSheets(employee: any) {
+    this.dialogID = employee.id;
+  }
+
+  closeDialog() {
+    this.dialogID = '';
+  }
 }
