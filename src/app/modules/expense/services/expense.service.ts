@@ -39,7 +39,7 @@ export class ExpenseService {
   }
 
   getAllExpensesWithPagination(page: number, size: number) {
-    return this.httpClient.get(this.baseUrl + '/expenses/getAllExpensesWithPagination?page' + page + '&size' + size);
+    return this.httpClient.get(this.baseUrl + '/expenses/pagination/getAllExpensesWithPagination?page' + page + '&size' + size);
 
   }
 }

@@ -17,7 +17,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   getAllUsersWithPagination(page: number, size: number){
-    return this.httpClient.get(this.baseUrl + '/users/getUsersByPagination?page' + page + '&size' + size);
+    return this.httpClient.get(this.baseUrl + '/users/pagination/getUsersByPagination?page' + page + '&size' + size);
   }
 
   getUserById(userId: number) {
@@ -25,15 +25,15 @@ export class UserService {
   }
 
   createUser(userToBeCreate: User) {
-    return this.httpClient.post(this.baseUrl + '/users', userToBeCreate);
+    return this.httpClient.post(this.baseUrl + '/users/create', userToBeCreate);
   }
 
   deleteUser(userId: number) {
-    return this.httpClient.delete(this.baseUrl + '/users/' + userId);
+    return this.httpClient.delete(this.baseUrl + '/users/delete/' + userId);
   }
 
   updateUser(userBody: User, userId: number) {
-    return this.httpClient.put(this.baseUrl + '/users/' + userId, userBody);
+    return this.httpClient.put(this.baseUrl + '/users/update/' + userId, userBody);
   }
 }
 

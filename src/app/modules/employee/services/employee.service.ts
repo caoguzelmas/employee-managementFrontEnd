@@ -34,19 +34,19 @@ export class EmployeeService {
   }
 
   getEmployeeById(id: number) {
-    return this.httpClient.get(this.baseUrl + '/employees/' + id);
+    return this.httpClient.get(this.baseUrl + '/employees/getById/' + id);
   }
 
   createEmployee(employeeToBeCreate: Employee): Observable<any> {
-    return this.httpClient.post<any>(this.baseUrl + '/employees', employeeToBeCreate);
+    return this.httpClient.post<any>(this.baseUrl + '/employees/create', employeeToBeCreate);
   }
 
   deleteEmployee(id: number) {
-    return this.httpClient.delete(this.baseUrl + '/employees/' + id);
+    return this.httpClient.delete(this.baseUrl + '/employees/delete/' + id);
   }
 
   updateEmployee(employeeBody: Employee, id: number) {
-    return this.httpClient.put(this.baseUrl + '/employees/' + id, employeeBody);
+    return this.httpClient.put(this.baseUrl + '/employees/update/' + id, employeeBody);
   }
 
   getEmployeeByUser(userBody: User) {

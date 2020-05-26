@@ -52,7 +52,7 @@ export class TimeSheetService {
   }
 
   getTimeSheetOfEmployeeById(emloyeeId: number) {
-    return this.httpClient.get(this.baseUrl + '/timeSheets/getTimeSheetsOfEmployeeById/' + emloyeeId);
+    return this.httpClient.get(this.baseUrl + '/timeSheets/getById/getTimeSheetsOfEmployeeById/' + emloyeeId);
   }
 }
 

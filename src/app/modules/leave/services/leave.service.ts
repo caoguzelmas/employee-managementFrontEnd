@@ -16,7 +16,7 @@ export class LeaveService {
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
   getAllLeavesWithPagination(page: number, size: number) {
-    return this.httpClient.get(this.baseUrl + '/leaves/getLeavesByPagination?page' + page + '&size' + size);
+    return this.httpClient.get(this.baseUrl + '/leaves/pagination/getLeavesByPagination?page' + page + '&size' + size);
   }
 
   getLeaveById(leaveId: number) {
